@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import Spinner from "./components/Spinner";
 import MovieCard from "./components/MovieCard";
 import { useDebounce } from "react-use";
+import { updateSearchCount } from "./appwrite";
 
 const API_BASE_URL = "https://api.themoviedb.org/3";
 const API_KEY = import.meta.env.VITE_IMDB_API_KEY;
@@ -52,6 +53,9 @@ const App = () => {
       }
 
       setMovieList(data.results || []);
+      if (query && data.results.length > 0) {
+        await updateSearchCount(query, data.results[0]);
+      }
     } catch (error) {
       console.error(`Error fetching movies: ${error}`);
       setErrorMessage("Error fetching movies. Please try again later.");
@@ -95,8 +99,6 @@ const App = () => {
 
           {errorMessage && <p className="text-red-500">{errorMessage}</p>}
         </section>
-
-        <h1 className="text-white">{searchTerm}</h1>
       </div>
     </main>
   );
