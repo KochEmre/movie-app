@@ -35,9 +35,9 @@
 
 2. **Install Dependencies: For running the project locally, you'll need a simple HTTP server. You can use http-server for this purpose:**
    
-npm install -g http-server
+   npm install -g http-server
 
 
 4. **Run the Application: Once the dependencies are installed, navigate to the project folder in your terminal and run the following command to start the server:**
    
-http-server
+   http-server
