@@ -1,12 +1,40 @@
-# React + Vite
+# My Movie App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**My Movie App** is a web application that allows users to discover popular movies. It fetches movie data using [The Movie Database (TMDb)](https://www.themoviedb.org/) API and provides functionality to search, explore, and view movie details.
 
-Currently, two official plugins are available:
+[Live Demo](https://kochemre.github.io/my-movie-app/)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## Expanding the ESLint configuration
+## Features
 
-If you are developing a production application, we recommend using TypeScript and enable type-aware lint rules. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- **Movie Search**: Users can search for movies by title and view the results.
+- **Popular Movies**: Discover the most popular movies currently trending.
+- **Movie Details**: View detailed information about each movie (title, description, release year, etc.).
+- **Responsive Design**: The app is fully responsive and works well on both mobile devices and desktops.
+
+---
+
+## Technologies
+
+- **HTML5**: For the structure of the web pages.
+- **CSS3**: For styling the application.
+- **JavaScript (ES6)**: To handle the functionality of the app.
+- **TMDb API**: To fetch movie data.
+- **Fetch API**: To make API calls and retrieve movie data.
+
+---
+
+## Installation
+
+1. **Clone or Download the Repository**:
+   Download the project or clone it from GitHub:
+
+   ```bash
+   git clone https://github.com/KochEmre/my-movie-app.git
+
+2. **Install Dependencies**:
+npm install -g http-server
+
+3. **Run the Application**:
+http-server
