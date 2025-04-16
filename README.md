@@ -6,6 +6,12 @@
 
 ---
 
+## 📸 Screenshots
+
+![Homepage](./screenshots/homepage.webp)
+
+---
+
 ## Features
 
 - **Movie Search**: Users can search for movies by title and view the results.
