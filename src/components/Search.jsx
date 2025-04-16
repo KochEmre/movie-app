@@ -1,12 +1,7 @@
 import React from "react";
+import Spinner from "./Spinner";
 
-const person = {
-  name: "Emre Koç",
-  age: 31,
-  location: "Kayseri",
-};
-
-const Search = ({ searchTerm, setSearchTerm }) => {
+const Search = ({ searchTerm, setSearchTerm, isLoading }) => {
   return (
     <div className="search">
       <div>
@@ -18,6 +13,12 @@ const Search = ({ searchTerm, setSearchTerm }) => {
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
+
+        {isLoading && (
+          <div className="search-spinner">
+            <Spinner size="small" />
+          </div>
+        )}
       </div>
     </div>
   );

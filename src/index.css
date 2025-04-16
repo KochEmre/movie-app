@@ -17,7 +17,7 @@
 
   --breakpoint-xs: 480px;
 
-  --background-image-hero-pattern: url("/hero-bg.png");
+  --background-image-hero-pattern: url("/hero-bg.webp");
 }
 
 @layer base {
@@ -72,8 +72,16 @@
       @apply fancy-text mt-[22px] text-nowrap;
     }
 
+    & ul li {
+      @apply transition-all duration-300 ease-in-out;
+
+      &:hover {
+        @apply transform scale-105;
+      }
+    }
+
     & ul li img {
-      @apply w-[127px] h-[163px] rounded-lg object-cover -ml-3.5;
+      @apply w-[127px] h-[163px] rounded-lg object-cover -ml-3.5 transition-all duration-300 ease-in-out;
     }
   }
 
@@ -91,6 +99,10 @@
     & input {
       @apply w-full bg-transparent py-2 sm:pr-10 pl-10 text-base text-gray-200 placeholder-light-200 outline-hidden;
     }
+
+    & .search-spinner {
+      @apply absolute right-2 top-1/2 transform -translate-y-1/2;
+    }
   }
 
   .all-movies {
@@ -102,10 +114,14 @@
   }
 
   .movie-card {
-    @apply bg-dark-100 p-5 rounded-2xl shadow-inner shadow-light-100/10;
+    @apply bg-dark-100 p-5 rounded-2xl shadow-inner shadow-light-100/10 transition-all duration-300 ease-in-out;
+
+    &:hover {
+      @apply transform scale-105 shadow-lg shadow-light-100/20;
+    }
 
     & img {
-      @apply rounded-lg h-auto w-full;
+      @apply rounded-lg h-auto w-full transition-all duration-300 ease-in-out;
     }
 
     & h3 {
@@ -159,4 +175,20 @@
   &::-webkit-scrollbar {
     display: none;
   }
+}
+
+/* Animation for search results */
+@keyframes highlight-results {
+  0% {
+    opacity: 0.7;
+    transform: translateY(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.search-results-highlight {
+  animation: highlight-results 0.6s ease-out;
 }
