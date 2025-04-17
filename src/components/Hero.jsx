@@ -20,13 +20,25 @@ const Hero = () => {
       setIsLoading(true);
       try {
         const movies = await getTrendingMovies();
-        // Get top 5 trending movies with backdrop images
+        // Get trending movies with backdrop images
         const moviesWithBackdrops = movies
-          .filter(movie => movie.backdrop_path)
-          .slice(0, 5);
+          .filter(movie => movie.backdrop_path);
 
         if (moviesWithBackdrops.length > 0) {
-          setFeaturedMovies(moviesWithBackdrops);
+          // Find "The Woman in the Yard" movie if it exists
+          const womanInYardIndex = moviesWithBackdrops.findIndex(
+            movie => movie.title.toLowerCase().includes("woman in the yard")
+          );
+
+          // If the movie exists, move it to the first position
+          if (womanInYardIndex !== -1) {
+            const womanInYardMovie = moviesWithBackdrops[womanInYardIndex];
+            moviesWithBackdrops.splice(womanInYardIndex, 1);
+            moviesWithBackdrops.unshift(womanInYardMovie);
+          }
+
+          // Take only the first 5 movies
+          setFeaturedMovies(moviesWithBackdrops.slice(0, 5));
         } else {
           // Fallback if no movies with backdrops
           setFeaturedMovies([{
