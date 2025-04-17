@@ -164,6 +164,35 @@ export const getBackdropUrl = (path, size = 'original') => {
   return `https://image.tmdb.org/t/p/${size}${path}`;
 };
 
+// Helper function to get movie trailer
+export const getMovieTrailer = async (movieId) => {
+  try {
+    const videos = await getMovieVideos(movieId);
+
+    // First look for official trailers
+    const officialTrailer = videos.find(
+      video => video.type === 'Trailer' && video.official && video.site === 'YouTube'
+    );
+
+    if (officialTrailer) return officialTrailer;
+
+    // Then look for any trailer
+    const anyTrailer = videos.find(
+      video => video.type === 'Trailer' && video.site === 'YouTube'
+    );
+
+    if (anyTrailer) return anyTrailer;
+
+    // If no trailers, return any video (teaser, clip, etc.)
+    const anyVideo = videos.find(video => video.site === 'YouTube');
+
+    return anyVideo || null;
+  } catch (error) {
+    console.error("Error fetching movie trailer:", error);
+    return null;
+  }
+};
+
 export default {
   getTrendingMovies,
   getPopularMovies,
@@ -174,6 +203,7 @@ export default {
   getMoviesByGenre,
   getGenres,
   getMovieVideos,
+  getMovieTrailer,
   getImageUrl,
   getBackdropUrl,
 };

@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { FaPlay, FaInfoCircle, FaStar, FaChevronLeft, FaChevronRight, FaHeart, FaRegHeart, FaBookmark, FaRegBookmark } from 'react-icons/fa';
 import { useFavorites } from '../contexts/FavoritesContext';
 import { useWatchlist } from '../contexts/WatchlistContext';
-import { getTrendingMovies, getBackdropUrl } from '../services/api';
+import { getTrendingMovies, getBackdropUrl, getMovieTrailer } from '../services/api';
 import MovieModal from './MovieModal';
+import VideoModal from './VideoModal';
 
 const Hero = () => {
   const { isFavorite, addToFavorites, removeFromFavorites } = useFavorites();
@@ -14,6 +14,8 @@ const Hero = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isVideoModalOpen, setIsVideoModalOpen] = useState(false);
+  const [trailerKey, setTrailerKey] = useState(null);
 
   useEffect(() => {
     const fetchFeaturedMovies = async () => {
@@ -71,7 +73,7 @@ const Hero = () => {
 
   // Auto-rotate featured movies
   useEffect(() => {
-    if (featuredMovies.length === 0 || isModalOpen) return;
+    if (featuredMovies.length === 0 || isModalOpen || isVideoModalOpen) return;
 
     const interval = setInterval(() => {
       setCurrentIndex(prevIndex =>
@@ -80,7 +82,7 @@ const Hero = () => {
     }, 8000);
 
     return () => clearInterval(interval);
-  }, [featuredMovies, isModalOpen]);
+  }, [featuredMovies, isModalOpen, isVideoModalOpen]);
 
   // Handle manual navigation
   const goToSlide = (index) => {
@@ -121,6 +123,28 @@ const Hero = () => {
       removeFromWatchlist(movie.id);
     } else {
       addToWatchlist(movie);
+    }
+  };
+
+  // Handle watch now button click
+  const handleWatchNowClick = async () => {
+    const movie = featuredMovies[currentIndex];
+
+    try {
+      setIsLoading(true);
+      const trailer = await getMovieTrailer(movie.id);
+
+      if (trailer && trailer.key) {
+        setTrailerKey(trailer.key);
+        setIsVideoModalOpen(true);
+      } else {
+        console.log('No trailer found for this movie');
+        // Could show a notification to the user here
+      }
+    } catch (error) {
+      console.error('Error fetching movie trailer:', error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -194,13 +218,13 @@ const Hero = () => {
           </p>
 
           <div className="flex flex-wrap gap-4">
-            <Link
-              to={`/`}
+            <button
+              onClick={handleWatchNowClick}
               className="px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white rounded-full flex items-center transition-colors"
             >
               <FaPlay className="mr-2" />
               Watch Now
-            </Link>
+            </button>
             <button
               onClick={() => setIsModalOpen(true)}
               className="px-6 py-3 bg-gray-800/80 hover:bg-gray-700 text-white rounded-full flex items-center transition-colors"
@@ -280,6 +304,18 @@ const Hero = () => {
         <MovieModal
           movieId={currentMovie.id}
           onClose={() => setIsModalOpen(false)}
+        />
+      )}
+
+      {/* Video Modal */}
+      {isVideoModalOpen && trailerKey && (
+        <VideoModal
+          videoKey={trailerKey}
+          title={currentMovie?.title}
+          onClose={() => {
+            setIsVideoModalOpen(false);
+            setTrailerKey(null);
+          }}
         />
       )}
     </div>

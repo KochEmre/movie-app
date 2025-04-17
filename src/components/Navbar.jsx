@@ -52,11 +52,11 @@ const Navbar = () => {
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
+        <div className="flex items-center justify-between h-14 sm:h-16">
           {/* Logo */}
           <div className="flex-shrink-0">
             <Link to="/" className="flex items-center">
-              <span className="text-2xl font-bold bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent">
+              <span className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent">
                 Emre - Movie App
               </span>
             </Link>
@@ -101,22 +101,22 @@ const Navbar = () => {
             {/* Search button */}
             <button
               onClick={() => setIsSearchOpen(true)}
-              className="p-2 rounded-full text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+              className="p-1.5 sm:p-2 rounded-full text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
               aria-label="Search"
             >
-              <FaSearch className="h-5 w-5" />
+              <FaSearch className="h-4 w-4 sm:h-5 sm:w-5" />
             </button>
 
             {/* Theme toggle */}
             <button
               onClick={toggleTheme}
-              className="p-2 rounded-full text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+              className="p-1.5 sm:p-2 rounded-full text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
               aria-label="Toggle theme"
             >
               {isDarkMode ? (
-                <FaSun className="h-5 w-5" />
+                <FaSun className="h-4 w-4 sm:h-5 sm:w-5" />
               ) : (
-                <FaMoon className="h-5 w-5" />
+                <FaMoon className="h-4 w-4 sm:h-5 sm:w-5" />
               )}
             </button>
 
@@ -124,14 +124,14 @@ const Navbar = () => {
             <div className="md:hidden">
               <button
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
-                className="p-2 rounded-full text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+                className="p-1.5 sm:p-2 rounded-full text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
                 aria-label="Main menu"
                 aria-expanded={isMenuOpen}
               >
                 {isMenuOpen ? (
-                  <FaTimes className="h-6 w-6" />
+                  <FaTimes className="h-5 w-5 sm:h-6 sm:w-6" />
                 ) : (
-                  <FaBars className="h-6 w-6" />
+                  <FaBars className="h-5 w-5 sm:h-6 sm:w-6" />
                 )}
               </button>
             </div>
@@ -212,13 +212,13 @@ const Navbar = () => {
                 className="w-full px-4 py-3 pl-10 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg shadow-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 text-gray-900 dark:text-white"
                 autoFocus
               />
-              <FaSearch className="absolute left-3 top-3.5 text-gray-400" />
+              <FaSearch className="absolute left-3 top-3.5 text-gray-400 h-4 w-4 sm:h-5 sm:w-5" />
               <button
                 type="button"
                 onClick={() => setIsSearchOpen(false)}
                 className="absolute right-3 top-3 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
               >
-                <FaTimes />
+                <FaTimes className="h-4 w-4 sm:h-5 sm:w-5" />
               </button>
             </form>
           </motion.div>
