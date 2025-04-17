@@ -31,9 +31,9 @@ const MovieSlider = ({ title, movies, icon, viewAllLink }) => {
           </div>
         </div>
 
-        <div className="flex overflow-x-auto gap-4 pb-4 hide-scrollbar">
+        <div className="flex overflow-x-auto gap-3 pb-4 hide-scrollbar">
           {[1, 2, 3, 4, 5].map((_, index) => (
-            <div key={index} className="flex-shrink-0 w-[160px] aspect-[2/3] bg-gray-200 dark:bg-gray-800 rounded-lg skeleton"></div>
+            <div key={index} className="flex-shrink-0 w-[164px] aspect-[2/3] bg-gray-200 dark:bg-gray-800 rounded-lg skeleton"></div>
           ))}
         </div>
       </div>
@@ -80,7 +80,7 @@ const MovieSlider = ({ title, movies, icon, viewAllLink }) => {
       <div className="relative">
         <motion.div
           ref={sliderRef}
-          className="flex overflow-x-auto gap-4 pb-4 hide-scrollbar"
+          className="flex overflow-x-auto gap-3 pb-4 hide-scrollbar"
           whileTap={{ cursor: "grabbing" }}
         >
           {movies.map(movie => (

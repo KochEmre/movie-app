@@ -44,7 +44,7 @@ const MovieCard = ({ movie, variant = 'default' }) => {
   // Different card styles based on variant
   const cardStyles = {
     default: 'w-full',
-    small: 'w-[150px] flex-shrink-0',
+    small: 'w-[164px] flex-shrink-0',
     featured: 'w-full md:w-[280px]',
   };
 
