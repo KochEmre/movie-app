@@ -1,6 +1,6 @@
 # Emre - Movie App
 
-A modern movie discovery platform that provides information about the latest movies using the TMDB API. This application offers a sleek, responsive interface with dark/light mode support and various interactive features.
+A modern movie discovery platform that provides information about the latest movies using the TMDB API. This application offers a sleek, responsive interface with dark/light mode support and various interactive features. All buttons and features are fully functional, including movie trailers, favorites, watchlist, search, and theme switching.
 
 [Live Demo](https://kochemre.github.io/my-movie-app/)
 
