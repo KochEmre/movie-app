@@ -32,11 +32,11 @@ const App = () => {
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                   <div className="flex flex-col md:flex-row justify-between items-center">
                     <div className="mb-4 md:mb-0">
-                      <span className="text-2xl font-bold bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent">Emre - Movie App</span>
+                      <span className="text-2xl font-bold bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent">Movie World</span>
                     </div>
                     <div className="text-sm">
                       <p>Data provided by <a href="https://www.themoviedb.org/" target="_blank" rel="noopener noreferrer" className="text-indigo-600 dark:text-indigo-400 hover:underline">The Movie Database (TMDb)</a></p>
-                      <p className="mt-1">© {new Date().getFullYear()} Emre - Movie App. All rights reserved.</p>
+                      <p className="mt-1">© {new Date().getFullYear()} Movie World. All rights reserved.</p>
                     </div>
                   </div>
                 </div>

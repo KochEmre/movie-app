@@ -20,7 +20,7 @@
   }
 
   main {
-    @apply min-h-screen pt-16; /* Add padding-top for fixed navbar */
+    @apply min-h-screen pt-[3.3rem] sm:pt-16; /* Smaller padding-top for mobile, larger for desktop */
   }
 
   /* Dark mode styles */

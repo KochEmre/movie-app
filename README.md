@@ -1,4 +1,4 @@
-# Emre - Movie App
+# Movie World
 
 A modern movie discovery platform that provides information about the latest movies using the TMDB API. This application offers a sleek, responsive interface with dark/light mode support and various interactive features. All buttons and features are fully functional, including movie trailers, favorites, watchlist, search, and theme switching.
 
