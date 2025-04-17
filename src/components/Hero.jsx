@@ -5,6 +5,7 @@ import { FaPlay, FaInfoCircle, FaStar, FaChevronLeft, FaChevronRight, FaHeart, F
 import { useFavorites } from '../contexts/FavoritesContext';
 import { useWatchlist } from '../contexts/WatchlistContext';
 import { getTrendingMovies, getBackdropUrl } from '../services/api';
+import MovieModal from './MovieModal';
 
 const Hero = () => {
   const { isFavorite, addToFavorites, removeFromFavorites } = useFavorites();
@@ -12,6 +13,7 @@ const Hero = () => {
   const [featuredMovies, setFeaturedMovies] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     const fetchFeaturedMovies = async () => {
@@ -57,7 +59,7 @@ const Hero = () => {
 
   // Auto-rotate featured movies
   useEffect(() => {
-    if (featuredMovies.length === 0) return;
+    if (featuredMovies.length === 0 || isModalOpen) return;
 
     const interval = setInterval(() => {
       setCurrentIndex(prevIndex =>
@@ -66,7 +68,7 @@ const Hero = () => {
     }, 8000);
 
     return () => clearInterval(interval);
-  }, [featuredMovies]);
+  }, [featuredMovies, isModalOpen]);
 
   // Handle manual navigation
   const goToSlide = (index) => {
@@ -187,13 +189,13 @@ const Hero = () => {
               <FaPlay className="mr-2" />
               Watch Now
             </Link>
-            <Link
-              to={`/`}
+            <button
+              onClick={() => setIsModalOpen(true)}
               className="px-6 py-3 bg-gray-800/80 hover:bg-gray-700 text-white rounded-full flex items-center transition-colors"
             >
               <FaInfoCircle className="mr-2" />
               More Info
-            </Link>
+            </button>
 
             {/* Favorite button */}
             <button
@@ -224,38 +226,50 @@ const Hero = () => {
         </motion.div>
       </div>
 
-      {/* Navigation arrows */}
-      <button
-        onClick={() => navigateSlide('prev')}
-        className="absolute left-4 top-1/2 transform -translate-y-1/2 z-20 p-2 rounded-full bg-black/30 hover:bg-black/50 text-white transition-colors"
-        aria-label="Previous slide"
-      >
-        <FaChevronLeft className="w-5 h-5" />
-      </button>
-
-      <button
-        onClick={() => navigateSlide('next')}
-        className="absolute right-4 top-1/2 transform -translate-y-1/2 z-20 p-2 rounded-full bg-black/30 hover:bg-black/50 text-white transition-colors"
-        aria-label="Next slide"
-      >
-        <FaChevronRight className="w-5 h-5" />
-      </button>
-
-      {/* Slide indicators */}
-      <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 z-20 flex space-x-2">
-        {featuredMovies.map((_, index) => (
+      {/* Navigation arrows - hidden when modal is open */}
+      {!isModalOpen && (
+        <>
           <button
-            key={index}
-            onClick={() => goToSlide(index)}
-            className={`w-2.5 h-2.5 rounded-full transition-all ${
-              index === currentIndex
-                ? 'bg-white w-8'
-                : 'bg-gray-400/50 hover:bg-gray-300/70'
-            }`}
-            aria-label={`Go to slide ${index + 1}`}
-          />
-        ))}
-      </div>
+            onClick={() => navigateSlide('prev')}
+            className="absolute left-4 top-1/2 transform -translate-y-1/2 z-20 p-2 rounded-full bg-black/30 hover:bg-black/50 text-white transition-colors"
+            aria-label="Previous slide"
+          >
+            <FaChevronLeft className="w-5 h-5" />
+          </button>
+
+          <button
+            onClick={() => navigateSlide('next')}
+            className="absolute right-4 top-1/2 transform -translate-y-1/2 z-20 p-2 rounded-full bg-black/30 hover:bg-black/50 text-white transition-colors"
+            aria-label="Next slide"
+          >
+            <FaChevronRight className="w-5 h-5" />
+          </button>
+
+          {/* Slide indicators */}
+          <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 z-20 flex space-x-2">
+            {featuredMovies.map((_, index) => (
+              <button
+                key={index}
+                onClick={() => goToSlide(index)}
+                className={`w-2.5 h-2.5 rounded-full transition-all ${
+                  index === currentIndex
+                    ? 'bg-white w-8'
+                    : 'bg-gray-400/50 hover:bg-gray-300/70'
+                }`}
+                aria-label={`Go to slide ${index + 1}`}
+              />
+            ))}
+          </div>
+        </>
+      )}
+
+      {/* Movie Modal */}
+      {isModalOpen && currentMovie && (
+        <MovieModal
+          movieId={currentMovie.id}
+          onClose={() => setIsModalOpen(false)}
+        />
+      )}
     </div>
   );
 };
