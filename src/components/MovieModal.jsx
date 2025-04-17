@@ -1,14 +1,17 @@
 import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FaTimes, FaStar, FaPlay, FaHeart, FaRegHeart, FaBookmark, FaRegBookmark } from 'react-icons/fa';
-import { getMovieDetails, getBackdropUrl } from '../services/api';
+import { getMovieDetails, getBackdropUrl, getMovieTrailer } from '../services/api';
 import { useFavorites } from '../contexts/FavoritesContext';
 import { useWatchlist } from '../contexts/WatchlistContext';
+import VideoModal from './VideoModal';
 
 const MovieModal = ({ movieId, onClose }) => {
   const [movie, setMovie] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [isVideoModalOpen, setIsVideoModalOpen] = useState(false);
+  const [trailerKey, setTrailerKey] = useState(null);
   const { isFavorite, addToFavorites, removeFromFavorites } = useFavorites();
   const { isInWatchlist, addToWatchlist, removeFromWatchlist } = useWatchlist();
 
@@ -67,6 +70,28 @@ const MovieModal = ({ movieId, onClose }) => {
       removeFromWatchlist(movie.id);
     } else {
       addToWatchlist(movie);
+    }
+  };
+
+  // Handle watch trailer button click
+  const handleWatchTrailerClick = async () => {
+    if (!movie) return;
+
+    try {
+      setIsLoading(true);
+      const trailer = await getMovieTrailer(movie.id);
+
+      if (trailer && trailer.key) {
+        setTrailerKey(trailer.key);
+        setIsVideoModalOpen(true);
+      } else {
+        console.log('No trailer found for this movie');
+        // Could show a notification to the user here
+      }
+    } catch (error) {
+      console.error('Error fetching movie trailer:', error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -148,7 +173,10 @@ const MovieModal = ({ movieId, onClose }) => {
               <div className="p-6">
                 {/* Action buttons */}
                 <div className="flex flex-wrap gap-3 mb-6">
-                  <button className="px-5 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-full flex items-center transition-colors">
+                  <button
+                    onClick={handleWatchTrailerClick}
+                    className="px-5 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-full flex items-center transition-colors"
+                  >
                     <FaPlay className="mr-2" />
                     Watch Trailer
                   </button>
@@ -267,6 +295,18 @@ const MovieModal = ({ movieId, onClose }) => {
             </>
           ) : null}
         </motion.div>
+
+        {/* Video Modal */}
+        {isVideoModalOpen && trailerKey && (
+          <VideoModal
+            videoKey={trailerKey}
+            title={movie?.title}
+            onClose={() => {
+              setIsVideoModalOpen(false);
+              setTrailerKey(null);
+            }}
+          />
+        )}
       </div>
     </AnimatePresence>
   );
